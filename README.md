@@ -6,4 +6,5 @@
 # -The original template used grid() to space everything, but pack() seems to accomplish
 #   what we need
 # -Looking into tkcalender to add scheduling for the scheduling screens
+#   UPDATE: Added some interactive calendars to the scheduling screens-> testAppCalendar.py
 #  3/22/21
