@@ -134,7 +134,7 @@ class Page1(tk.Frame):
 class Page2(tk.Frame): 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = ttk.Label(self, anchor="n",text ="Main Menu",width=-80, justify=tk.CENTER)
+		label = ttk.Label(self, anchor="n",text ="Main Menu",width=-55, justify=tk.CENTER)
 		label.grid(row = 0,column = 1,columnspan=3, padx = 10, pady = 10,sticky="ew")
 		
 		
