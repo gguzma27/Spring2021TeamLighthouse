@@ -12,6 +12,8 @@
 # -Looking into tkcalender to add scheduling for the scheduling screens
 #   UPDATE: Added some interactive calendars to the scheduling screens
 #  3/22/21
+# -Added time selection to Calendars in both scheduling screens
+#   3/24/21
 
 from tkcalendar import Calendar, DateEntry
 import tkinter as tk
@@ -134,7 +136,7 @@ class Page1(tk.Frame):
 class Page2(tk.Frame): 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		label = ttk.Label(self, anchor="n",text ="Main Menu",width=-55, justify=tk.CENTER)
+		label = ttk.Label(self, anchor="n",text ="Main Menu",width=-80, justify=tk.CENTER)
 		label.grid(row = 0,column = 1,columnspan=3, padx = 10, pady = 10,sticky="ew")
 		
 		
@@ -165,18 +167,23 @@ class Page2(tk.Frame):
 class Page3(tk.Frame): 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		#label = ttk.Label(self, anchor="center",width=-100,text ="This is where\nwe #schedule appointments" ,justify=tk.CENTER,background="white",padding = 50)
-		#label.grid(row = 0,columnspan = 5, padx = 10, pady = 10,sticky="ew")
-		#label.pack(side="top",fill="x")
 		
-		cal = Calendar(self, selectmode='none')
+		#Calendar Section
+		
+		cal = Calendar(self, selectmode='day')
 		date = cal.datetime.today() + cal.timedelta(days=2)
-		cal.calevent_create(date, 'Hello World', 'message')
-		cal.calevent_create(date, 'Reminder 2', 'reminder')
-		cal.calevent_create(date + cal.timedelta(days=-2), 'Reminder 1', 'reminder')
-		cal.calevent_create(date + cal.timedelta(days=3), 'Message', 'message')
-		cal.tag_config('reminder', background='red', foreground='yellow')
 		cal.pack(fill="both", expand=True)
+		
+		#Time Slot Section
+		cal.var = tk.StringVar()
+		options = ["11:00 am", "11:15 am", "11:30 am", "11:45 am",
+		           "12:00 pm", "12:15 pm", "12:30 pm", "12:45 pm",
+		           "01:00 pm", "01:15 pm", "01:30 pm", "01:45 pm",
+		           "02:00 pm", "02:15 pm", "02:30 pm", "02:45 pm"]
+		cb = ttk.Combobox(cal, textvariable=cal.var, values=options)
+		cb.pack(side="top")
+		
+		
 		
 		# button to show frame 2 with text
 		# layout2
@@ -200,17 +207,21 @@ class Page3(tk.Frame):
 class Page4(tk.Frame): 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
-		#label = ttk.Label(self, anchor="center",width=-100,text ="This is where\nwe #schedule vaccines" ,justify=tk.CENTER,background="white",padding = 50)
-		#label.pack(side="top",fill="x")
 		
-		cal = Calendar(self, selectmode='none')
+		#Calendar section, set to day selection
+		cal = Calendar(self, selectmode='day')
 		date = cal.datetime.today() + cal.timedelta(days=2)
-		cal.calevent_create(date, 'Hello World', 'message')
-		cal.calevent_create(date, 'Reminder 2', 'reminder')
-		cal.calevent_create(date + cal.timedelta(days=-2), 'Reminder 1', 'reminder')
-		cal.calevent_create(date + cal.timedelta(days=3), 'Message', 'message')
-		cal.tag_config('reminder', background='red', foreground='yellow')
 		cal.pack(fill="both", expand=True)
+		
+		#Time Slot section
+		cal.var = tk.StringVar()
+		options = ["11:00 am", "11:15 am", "11:30 am", "11:45 am",
+		           "12:00 pm", "12:15 pm", "12:30 pm", "12:45 pm",
+		           "01:00 pm", "01:15 pm", "01:30 pm", "01:45 pm",
+		           "02:00 pm", "02:15 pm", "02:30 pm", "02:45 pm"]
+		cb = ttk.Combobox(cal, textvariable=cal.var, values=options)
+		cb.pack(side="top")
+		
 		
 		# button to show frame 2 with text
 		# layout2
