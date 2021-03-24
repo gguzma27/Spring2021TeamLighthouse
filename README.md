@@ -8,3 +8,5 @@
 # -Looking into tkcalender to add scheduling for the scheduling screens
 #   UPDATE: Added some interactive calendars to the scheduling screens-> testAppCalendar.py
 #  3/22/21
+# -Added time selection to Calendars in both scheduling screens
+#   3/24/21
