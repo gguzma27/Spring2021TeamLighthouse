@@ -18,12 +18,15 @@
 from tkcalendar import Calendar, DateEntry
 import tkinter as tk
 from tkinter import ttk
-
+from PIL import Image, ImageTk
 
 #This font was used early in the script can be used again
 #just haven't really looked at it
 
 LARGEFONT =("Verdana", 35)
+
+
+
 
 
 class tkinterApp(tk.Tk):
@@ -136,31 +139,37 @@ class Page1(tk.Frame):
 class Page2(tk.Frame): 
 	def __init__(self, parent, controller):
 		tk.Frame.__init__(self, parent)
+		
+		#added icons for Menu Buttons
+		self.my_img = ImageTk.PhotoImage(Image.open("images/calendar1.png"))
+		self.resultsImg = ImageTk.PhotoImage(Image.open("images/resultsAdj.png"))
+
+		
 		label = ttk.Label(self, anchor="n",text ="Main Menu",width=-80, justify=tk.CENTER)
 		label.grid(row = 0,column = 1,columnspan=3, padx = 10, pady = 10,sticky="ew")
 		
 		
 		# button to show frame 2 with text
 		# layout2
-		button1 = ttk.Button(self, text ="Schedule Test",command = lambda : controller.show_frame(Page3))
+		button1 = ttk.Button(self,image=self.my_img,compound = tk.BOTTOM,text ="Schedule Test",command = lambda : controller.show_frame(Page3))
 	
 							
 		# putting the button in its place by 
 		# using grid
-		button1.grid(row = 1, column = 0, ipadx = 40, ipady = 10)
+		button1.grid(row = 1, column = 0, ipadx = 10, ipady = 10)
 	
 		# button to show frame 3 with text
 		# layout3
-		button2 = ttk.Button(self, text ="Schedule Vaccine",command = lambda : controller.show_frame(Page4))
+		button2 = ttk.Button(self,image=self.my_img,compound = tk.BOTTOM, text ="Schedule Vaccine",command = lambda : controller.show_frame(Page4))
 		
 							
 		# putting the button in its place by
 		# using grid
-		button2.grid(row = 1, column = 2, ipadx = 40, ipady = 10)
+		button2.grid(row = 1, column = 2, ipadx = 10, ipady = 10)
 			
 		
-		button3 = ttk.Button(self,text="See Results", command = lambda : controller.show_frame(Page5))
-		button3.grid(row = 1, column = 4, ipadx = 40, ipady = 10)
+		button3 = ttk.Button(self,image=self.resultsImg, compound = tk.BOTTOM, text="See Results", command = lambda : controller.show_frame(Page5))
+		button3.grid(row = 1, column = 4, ipadx = 10, ipady = 5)
 	
 
 #page 3 is where we will schedule appts
