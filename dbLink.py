@@ -4,9 +4,9 @@ import mysql.connector
 #The following credentials need to be updated to whereever 
 #the database resides
 mydb = mysql.connector.connect(
-  host="localhost",
+  host="patients.cb2zk96gmi72.us-east-2.rds.amazonaws.com:3306",
   user="Lighthouse",
-  password="patients.cb2zk96gmi72.us-east-2.rds.amazonaws.com:3306",
+  password="SeniorDesign2",
   database="patients"
 )
 
