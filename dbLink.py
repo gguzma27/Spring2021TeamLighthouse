@@ -7,7 +7,7 @@ mydb = mysql.connector.connect(
   host="localhost",
   user="Lighthouse",
   password="patients.cb2zk96gmi72.us-east-2.rds.amazonaws.com:3306",
-  database="Patients"
+  database="patients"
 )
 
 def addUser(str1,str2,str3):
