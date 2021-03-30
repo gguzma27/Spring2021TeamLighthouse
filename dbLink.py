@@ -5,9 +5,9 @@ import mysql.connector
 #the database resides
 mydb = mysql.connector.connect(
   host="localhost",
-  user="gguzma27",
-  password="14789632",
-  database="patients"
+  user="Lighthouse",
+  password="patients.cb2zk96gmi72.us-east-2.rds.amazonaws.com:3306",
+  database="Patients"
 )
 
 def addUser(str1,str2,str3):
