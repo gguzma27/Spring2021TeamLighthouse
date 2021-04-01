@@ -89,10 +89,29 @@ class tkinterApp(tk.Tk):
 		frame.tkraise()
 		#frame.winfo_toplevel().geometry("800x400")
 		#^^^ early attempt to "fix" the window size, could be used later
-
+	def get_page(self, classname):
+        #Returns an instance of a page given it's class name as a string'''
+        	for page in self.frames.values():
+            		if str(page.__class__.__name__) == classname:
+                		return page
+        	return None
+	def updateResults(self):
+		global results
+		page5 = self.get_page("Page5")	
+		if results == "yes":
+			msg = "You have tested positive for COVID-19"
+		elif results == "no":
+			msg = "You have tested negative for COVID-19"
+		else:
+			msg = "You do not have any results yet."
+			
+		page5.label.configure(text=str(msg))
+		app.after(1000,self.updateResults)
+	
 # first window frame startpage, this will be the welcome page
 class StartPage(tk.Frame):
 	def __init__(self, parent, controller): 
+		self.controller = controller
 		tk.Frame.__init__(self, parent)
 		
 		# label of frame Layout 2
@@ -119,7 +138,7 @@ class StartPage(tk.Frame):
 class Page1(tk.Frame):
 	
 	def __init__(self, parent, controller):
-		
+		self.controller = controller
 		tk.Frame.__init__(self, parent)
 		label = ttk.Label(self, anchor="center",width=-100,text ="Are you a\nnew user?" ,justify=tk.CENTER,background="white",padding = 50)
 		
@@ -151,7 +170,7 @@ class Page1(tk.Frame):
 
 class Page2(tk.Frame): 
 	def __init__(self, parent, controller):
-		
+		self.controller = controller
 		def findResults():
 			global results
 			global User_first_name
@@ -197,7 +216,7 @@ class Page2(tk.Frame):
 #page 3 is where we will schedule appts
 class Page3(tk.Frame): 
 	def __init__(self, parent, controller):
-	
+		self.controller = controller
 		#assignment functions to make variables out of user selection
 		def date_assign(e):
 			apptDay = str(cal.get_date())
@@ -249,7 +268,7 @@ class Page3(tk.Frame):
 #page 4 is where we will schedule vaccines
 class Page4(tk.Frame): 
 	def __init__(self, parent, controller):
-		
+		self.controller = controller
 		#assignment functions to make variables out of user selection
 		def date_assign(e):
 			vacDay = str(cal.get_date())
@@ -302,29 +321,16 @@ class Page4(tk.Frame):
 #page 5 is where we will see results
 class Page5(tk.Frame): 
 	def __init__(self, parent, controller):
-		
-		
-		def updateResults():
-			global results
-			
-			if results == "yes":
-				return "You have tested positive for COVID-19"
-			elif results == "no":
-				return "You have tested negative for COVID-19"
-			else:
-				return "You do not have any results yet."
-		
-		
-		
+		self.controller = controller
 		tk.Frame.__init__(self, parent)
 		#Go to database to get results for specific user
 	
 		
 		userResults = tk.StringVar()
 		userResults.set(results)
-		label = ttk.Label(self, anchor="center",width=-100,text=updateResults(),justify=tk.CENTER,background="white",padding = 50)
+		self.label = ttk.Label(self, anchor="center",width=-100,text="dunno",justify=tk.CENTER,background="white",padding = 50)
 		#label.grid(row = 0,columnspan = 5, padx = 10, pady = 10,sticky="ew")
-		label.pack(side="top",fill="x")
+		self.label.pack(side="top",fill="x")
 		
 		# button to show frame 2 with text
 		# layout2
@@ -349,6 +355,7 @@ class Page5(tk.Frame):
 #page 6 will ask the user if they want to keep going in the session
 class Page6(tk.Frame): 
 	def __init__(self, parent, controller):
+		self.controller = controller
 		tk.Frame.__init__(self, parent)
 		label = ttk.Label(self, anchor="center",width=-100,text ="Do you want\nto end the session?" ,justify=tk.CENTER,background="white",padding = 50)
 		label.pack(side="top",fill="x")
@@ -374,6 +381,7 @@ class Page6(tk.Frame):
 #page 7 will provide the user with parting info and end the session, returning to the welcome screen
 class Page7(tk.Frame): 
 	def __init__(self, parent, controller):
+		self.controller = controller
 		tk.Frame.__init__(self, parent)
 		label = ttk.Label(self, anchor="center",width=-100,text ="Show ending info here\nand end the session" ,justify=tk.CENTER,background="white",padding = 50)
 		
@@ -394,7 +402,7 @@ class Page7(tk.Frame):
 class Page8(tk.Frame):
 	
 	def __init__(self, parent, controller):
-		
+		self.controller = controller
 		def makeUser():
 			global User_first_name
 			global User_last_name
@@ -484,6 +492,7 @@ class Page8(tk.Frame):
 class Page9(tk.Frame):
 	
 	def __init__(self, parent, controller):
+		self.controller = controller
 		def updateUser(str1,str2,str3):
 			global User_first_name
 			global User_last_name
@@ -591,7 +600,7 @@ class Page9(tk.Frame):
 class Page10(tk.Frame):
 	
 	def __init__(self, parent, controller):
-		
+		self.controller = controller
 		tk.Frame.__init__(self, parent)
 		label = ttk.Label(self, anchor="center",width=-100,text ="This user\ndoes not exist" ,justify=tk.CENTER,background="white",padding = 50)
 		
@@ -618,5 +627,6 @@ class Page10(tk.Frame):
 		
 # Driver Code
 app = tkinterApp()
+app.after(1000,app.updateResults())
 app.mainloop()
 
