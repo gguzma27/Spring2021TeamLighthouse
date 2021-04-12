@@ -1,12 +1,13 @@
 import mysql.connector
+import numpy
 
 
 #The following credentials need to be updated to whereever 
 #the database resides
 mydb = mysql.connector.connect(
-  host="patients.cb2zk96gmi72.us-east-2.rds.amazonaws.com:3306",
-  user="Lighthouse",
-  password="SeniorDesign2",
+  host="localhost",
+  user="gguzma27",
+  password="14789632",
   database="patients"
 )
 
@@ -66,6 +67,16 @@ def updateApptTime(str1,str2,str3):
 
 	mydb.commit()
 
+def updateApptLoc(str1,str2,str3):
+	#must be hh:mm
+	mycursor = mydb.cursor()
+
+	sql = "UPDATE information SET appointment_location = %s WHERE first_name = %s AND last_name = %s"
+	val = (str1,str2,str3)
+
+	mycursor.execute(sql,val)
+
+	mydb.commit()
 
 	
 def updateVacDate(str1,str2,str3):
@@ -80,11 +91,22 @@ def updateVacDate(str1,str2,str3):
 	mydb.commit()
 
 
-def updateVacTime(str):
+def updateVacTime(str1,str2,str3):
 	#must be hh:mm
 	mycursor = mydb.cursor()
 
 	sql = "UPDATE information SET vaccine_time = %s WHERE first_name = %s AND last_name = %s"
+	val = (str1,str2,str3)
+
+	mycursor.execute(sql,val)
+
+	mydb.commit()
+	
+def updateVacLoc(str1,str2,str3):
+	#must be hh:mm
+	mycursor = mydb.cursor()
+
+	sql = "UPDATE information SET vaccine_location = %s WHERE first_name = %s AND last_name = %s"
 	val = (str1,str2,str3)
 
 	mycursor.execute(sql,val)
@@ -172,6 +194,56 @@ def getVacTime(str1,str2):
 	time = str(timeRaw)
 	
 	return time
+
+def createApptEntry(str1,str2):
+	mycursor = mydb.cursor()
+
+	sql = "INSERT INTO vaccineSchedule (Location,Date) VALUES (%s,%s)"
+	val = (str1,str2)
+
+	mycursor.execute(sql,val)
+
+	mydb.commit()
+	
+def updateSchedule(str1,str2,str3,str4,str5):
+	#must be hh:mm
+	mycursor = mydb.cursor()
+
+	#since column names in database contain colons backticks(``) are needed to reference them
+	sql = "UPDATE "+str1+" SET `s"+str2+"` = %s WHERE (Date = %s) AND (Location = %s)"
+	val = (str3,str4,str5)
+
+	mycursor.execute(sql,val)
+
+	mydb.commit()
+	
+def getScheduleTimes(str1,str2,str3):
+	if str3 == "" or str2 == "" or str2 == "What Site?":
+		return "none"
+	else:
+		mycursor = mydb.cursor()
+	
+		sql = "SELECT * FROM "+str1+" WHERE Location = %s AND Date = %s"
+		val = (str2,str3)
+	
+		mycursor.execute(sql,val)
+		record = mycursor.fetchone()
+	
+		i=0
+		timesAvail = []
+		for t in record:
+			if t != "":
+				timesAvail.append(str(t))
+				i+=1
+		
+		timesAvail.pop(0)
+		timesAvail.pop(0)
+		
+		if len(timesAvail) == 0:
+			timesAvail.append("none")
+		else:
+			timesAvail.insert(0,str(i-2)+" time(s) available")
+		return timesAvail
 	
 if __name__ == '__main__':
 	addUser()
@@ -182,11 +254,14 @@ if __name__ == '__main__':
 	updateVacDate()
 	updateApptTime()
 	updateVacTime()
+	updateApptLoc()
+	updateVacLoc()
 	getResults()
 	getApptDate()
 	getVacDate()
 	getApptTime()
 	getVacTime()
-	
-	
+	createApptEntry()
+	updateSchedule()
+	getScheduleTimes()
 
