@@ -5,10 +5,10 @@ import numpy
 #The following credentials need to be updated to whereever 
 #the database resides
 mydb = mysql.connector.connect(
-  host="localhost",
-  user="gguzma27",
-  password="14789632",
-  database="patients"
+  host="lighthouse.digital.uic.edu",
+  user="lighthou_team",
+  password="SeniorDesign2",
+  database="lighthou_patients"
 )
 
 def addUser(str1,str2,str3):

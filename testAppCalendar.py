@@ -131,14 +131,14 @@ class tkinterApp(tk.Tk):
 		if apptDay == "" or apptTime == "":
 			confirm1 = "You have not scheduled an appointment. Would you like to proceed?"
 		else:
-			confirm1 = "Would you like to confirm your appointment on "+apptDay+" at "+apptTime
+			confirm1 = "Would you like to confirm your appointment at "+apptLoc+" on "+apptDay+" at "+apptTime
 		page11.label.configure(text=str(confirm1))
 		
 		page12= self.get_page("Page12")
 		if vacDay == "" or vacTime == "":
 			confirm2 = "You have not scheduled an appointment. Would you like to proceed?"
 		else:
-			confirm2 = "Would you like to confirm your appointment on "+vacDay+" at "+vacTime
+			confirm2 = "Would you like to confirm your appointment at "+vacLoc+" on "+vacDay+" at "+vacTime
 		page12.label.configure(text=str(confirm2))
 		
 		
@@ -756,6 +756,7 @@ class Page11(tk.Frame):
 		def updateApptRecords():
 			global apptDay
 			global apptTime
+			global apptLoc
 			global User_first_name
 			global User_last_name 
 			
@@ -764,6 +765,8 @@ class Page11(tk.Frame):
 			else:
 				dbLink.updateApptDate(apptDay,User_first_name,User_last_name)
 				dbLink.updateApptTime(apptTime,User_first_name,User_last_name)
+				dbLink.updateApptLoc(apptLoc,User_first_name,User_last_name)
+				dbLink.updateSchedule("apptSchedule",apptTime,"",apptDay,apptLoc)
 				controller.show_frame(Page6)
 			
 			
