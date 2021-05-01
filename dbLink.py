@@ -43,6 +43,17 @@ def updateDOB(str1,str2,str3):
 
 	mydb.commit()
 
+def updatePhone(str1,str2,str3):
+	
+	mycursor = mydb.cursor()
+
+	sql = "UPDATE information SET phone = %s WHERE first_name = %s AND last_name = %s"
+	val = (str1,str2,str3)
+
+	mycursor.execute(sql,val)
+
+	mydb.commit()
+
 def updateApptDate(str1,str2,str3):
 	#must be yyyy/mm/dd
 	mycursor = mydb.cursor()
@@ -249,6 +260,7 @@ if __name__ == '__main__':
 	addUser()
 	findUser()
 	updateDOB()
+	updatePhone()
 	updateResults()
 	updateApptDate()
 	updateVacDate()
