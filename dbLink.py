@@ -206,13 +206,32 @@ def getVacTime(str1,str2):
 	
 	return time
 
-def createApptEntry(str1,str2):
+def createApptEntry(str1,str2,str3):
 	mycursor = mydb.cursor()
 
-	sql = "INSERT INTO vaccineSchedule (Location,Date) VALUES (%s,%s)"
+	sql = "INSERT INTO "+str3+" (Location,Date) VALUES (%s,%s)"
 	val = (str1,str2)
 
 	mycursor.execute(sql,val)
+
+	mydb.commit()
+	
+def createApptTable(str1):
+	mycursor = mydb.cursor()
+
+	sql = "CREATE TABLE "+str1+" (Location varchar(30), Date varchar(20), `s11:00` varchar(12), `s11:15` varchar(12), `s11:30` varchar(12), `s11:45` varchar(12), `s12:00` varchar(12), `s12:15` varchar(12), `s12:30` varchar(12), `s12:45` varchar(12), `s01:00` varchar(12), `s01:15` varchar(12), `s01:30` varchar(12), `s01:45` varchar(12), `s02:00` varchar(12), `s02:15` varchar(12), `s02:30` varchar(12), `s02:45` varchar(12));"
+	
+
+	mycursor.execute(sql)
+
+	mydb.commit()
+def createInfoTable(str1):
+	mycursor = mydb.cursor()
+
+	sql = "CREATE TABLE "+str1+" (first_name varchar(30), last_name varchar(30), DOB varchar(20), phone varchar(12), appointment_date varchar(12), appointment_time varchar(12), appointment_location varchar(30), vaccine_date varchar(12), vaccine_time varchar(12), vaccine_location varchar(30), HasCovid varchar(4));"
+	
+
+	mycursor.execute(sql)
 
 	mydb.commit()
 	
@@ -276,4 +295,5 @@ if __name__ == '__main__':
 	createApptEntry()
 	updateSchedule()
 	getScheduleTimes()
+	createApptTable()
 
